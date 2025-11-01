@@ -1,0 +1,70 @@
+.users-page {
+    padding: 16px;
+  
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+  
+    .ant-btn-primary {
+      margin-bottom: 16px;
+    }
+  
+    .ant-table {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+  
+    .ant-modal {
+      .ant-modal-content {
+        border-radius: 12px;
+      }
+  
+      .ant-form-item {
+        margin-bottom: 14px;
+  
+        label {
+          font-weight: 500;
+        }
+      }
+    }
+  
+    /* 🔹 Mobil Uyum */
+    @media (max-width: 768px) {
+      padding: 8px;
+  
+      h1 {
+        font-size: 1.4rem;
+        text-align: center;
+      }
+  
+      .ant-btn-primary {
+        width: 100%;
+        margin-bottom: 12px;
+      }
+  
+      .ant-table-wrapper {
+        overflow-x: auto;
+  
+        table {
+          width: 700px; // tablo büyükse kaydırılabilir hale getir
+        }
+      }
+  
+      .ant-modal {
+        width: 90% !important;
+        top: 10px;
+  
+        .ant-form {
+          .ant-input,
+          .ant-select-selector,
+          .ant-input-password {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  
