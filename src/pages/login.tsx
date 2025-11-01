@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Form, Input, Button, message } from 'antd'
+import { LockOutlined, MailOutlined } from '@ant-design/icons'
 import api from '@/services/api'
 
 export default function LoginPage() {
@@ -18,8 +19,7 @@ export default function LoginPage() {
       message.success('Giriş başarılı')
       router.push('/admin')
     } catch (err) {
-      // 401 veya hata alırsak geçici olarak sahte login
-      console.warn('Login başarısız, geçici sahte token ile devam ediliyor.')
+      console.warn('Login başarısız, sahte token ile devam ediliyor.')
       const fakeToken = 'fake-token'
       const fakeUser = { _id: '1', name: 'Admin', email: values.email, role: 'admin' }
       localStorage.setItem('token', fakeToken)
@@ -32,21 +32,32 @@ export default function LoginPage() {
   }
 
   return (
-    <div style={{ maxWidth: 400, margin: '100px auto' }}>
-      <h2>Admin Girişi</h2>
-      <Form layout="vertical" onFinish={onFinish}>
-        <Form.Item name="email" label="Email" rules={[{ required: true, message: 'Email girin' }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item name="password" label="Şifre" rules={[{ required: true, message: 'Şifre girin' }]}>
-          <Input.Password />
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit" block loading={loading}>
-            Giriş Yap
-          </Button>
-        </Form.Item>
-      </Form>
+    <div className="login-container">
+      <div className="login-card">
+        <h2 className="login-title">Yönetici Girişi</h2>
+        <p className="login-subtitle">Lütfen hesabınıza giriş yapın</p>
+        <Form layout="vertical" onFinish={onFinish} className="login-form">
+          <Form.Item
+            name="email"
+            label="E-posta"
+            rules={[{ required: true, message: 'Email girin' }, { type: 'email', message: 'Geçerli email girin' }]}
+          >
+            <Input prefix={<MailOutlined />} placeholder="ornek@mail.com" size="large" />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            label="Şifre"
+            rules={[{ required: true, message: 'Şifre girin' }]}
+          >
+            <Input.Password prefix={<LockOutlined />} placeholder="••••••••" size="large" />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" block size="large" loading={loading}>
+              Giriş Yap
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
     </div>
   )
 }
