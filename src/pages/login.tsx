@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { Form, Input, Button, message } from 'antd'
 import { LockOutlined, MailOutlined } from '@ant-design/icons'
 import api from '@/services/api'
+import { AxiosError } from 'axios'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -19,13 +20,9 @@ export default function LoginPage() {
       message.success('Giriş başarılı')
       router.push('/admin')
     } catch (err) {
-      console.warn('Login başarısız, sahte token ile devam ediliyor.')
-      const fakeToken = 'fake-token'
-      const fakeUser = { _id: '1', name: 'Admin', email: values.email, role: 'admin' }
-      localStorage.setItem('token', fakeToken)
-      localStorage.setItem('user', JSON.stringify(fakeUser))
-      message.info('Sahte login ile devam ediliyor')
-      router.push('/admin')
+      const error = err as AxiosError<{ error?: string }>
+      console.error('Login başarısız:', error)
+      message.error(error.response?.data?.error || 'Email veya şifre hatalı')
     } finally {
       setLoading(false)
     }
@@ -40,7 +37,10 @@ export default function LoginPage() {
           <Form.Item
             name="email"
             label="E-posta"
-            rules={[{ required: true, message: 'Email girin' }, { type: 'email', message: 'Geçerli email girin' }]}
+            rules={[
+              { required: true, message: 'Email girin' },
+              { type: 'email', message: 'Geçerli email girin' }
+            ]}
           >
             <Input prefix={<MailOutlined />} placeholder="ornek@mail.com" size="large" />
           </Form.Item>
