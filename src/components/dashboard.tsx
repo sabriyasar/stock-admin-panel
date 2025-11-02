@@ -53,7 +53,7 @@ export default function Dashboard({ children }: Props) {
               <span className="text">Dashboard</span>
             </Link>
           </li>
-          <li className={router.pathname === '/admin/users' ? 'active' : ''}>
+          <li className={router.pathname === '/admin/users-management' ? 'active' : ''}>
             <Link href="/admin/users">
               <SettingOutlined className="icon" />
               <span className="text">Kullanıcılar</span>
