@@ -58,7 +58,7 @@ export default function UsersPage() {
 
   const handleDelete = async (id: string) => {
     try {
-      await api.delete(`/api/users/${id}`)
+      await api.delete(`/api/admin/users/${id}`)
       message.success('Kullanıcı silindi')
       fetchUsers()
     } catch (err) {
@@ -73,11 +73,11 @@ export default function UsersPage() {
       let updatedUser: User | null = null
   
       if (editingUser) {
-        const res = await api.put(`/api/users/${editingUser._id}`, values)
+        const res = await api.put(`/api/admin/users/${editingUser._id}`, values)
         message.success('Kullanıcı güncellendi')
         updatedUser = res.data
       } else {
-        const res = await api.post('/api/users', values)
+        const res = await api.post('/api/admin/users', values)
         message.success('Kullanıcı eklendi')
         updatedUser = res.data
       }
