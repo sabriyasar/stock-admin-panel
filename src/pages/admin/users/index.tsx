@@ -28,11 +28,11 @@ export default function UsersPage() {
     setLoading(true)
     try {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/users`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/users/users`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         }
-      )
+      )      
       setUsers(res.data)
     } catch (err) {
       console.error('Kullanıcılar alınamadı', err)
