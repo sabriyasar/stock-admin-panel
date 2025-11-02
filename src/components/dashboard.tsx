@@ -54,7 +54,7 @@ export default function Dashboard({ children }: Props) {
             </Link>
           </li>
           <li className={router.pathname === '/admin/users-management' ? 'active' : ''}>
-            <Link href="/admin/users">
+            <Link href="/admin/users-management">
               <SettingOutlined className="icon" />
               <span className="text">Kullanıcılar</span>
             </Link>
