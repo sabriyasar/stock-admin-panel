@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect, ReactNode } from 'react'
-import { MenuOutlined, CloseOutlined, LeftOutlined, RightOutlined, DashboardOutlined, ShoppingOutlined, SettingOutlined } from '@ant-design/icons'
+import { MenuOutlined, CloseOutlined, LeftOutlined, RightOutlined, DashboardOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -17,6 +17,12 @@ export default function Dashboard({ children }: Props) {
   const toggleMobileSidebar = () => setMobileOpen(!mobileOpen)
   const closeSidebar = () => setMobileOpen(false)
   const toggleCollapse = () => setCollapsed(!collapsed)
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    router.push('/login')
+  }
 
   useEffect(() => {
     const handleResize = () => {
@@ -53,6 +59,10 @@ export default function Dashboard({ children }: Props) {
               <span className="text">Kullanıcılar</span>
             </Link>
           </li>
+          <li onClick={handleLogout} style={{ cursor: 'pointer' }}>
+            <LogoutOutlined className="icon" />
+            <span className="text">Çıkış Yap</span>
+          </li>
         </ul>
 
         {!isMobile && (
@@ -68,7 +78,7 @@ export default function Dashboard({ children }: Props) {
           <div className="mobile-header">
             <MenuOutlined className="menu-icon" onClick={toggleMobileSidebar} />
             <div className="mobile-title">Admin Paneli</div>
-            <div style={{ width: 24 }}></div>
+            <LogoutOutlined className="menu-icon" onClick={handleLogout} />
           </div>
         )}
 
