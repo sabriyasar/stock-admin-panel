@@ -5,6 +5,7 @@ import { Table, Spin, Button, Modal, Form, Input, Select, message, Popconfirm } 
 import type { ColumnsType } from 'antd/es/table'
 import api from '@/services/api'
 import Dashboard from '@/components/dashboard'
+import axios from 'axios'
 
 interface User {
   _id: string
@@ -26,7 +27,12 @@ export default function UsersPage() {
   const fetchUsers = async () => {
     setLoading(true)
     try {
-      const res = await api.get('/api/users')
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/users`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        }
+      )
       setUsers(res.data)
     } catch (err) {
       console.error('Kullanıcılar alınamadı', err)
