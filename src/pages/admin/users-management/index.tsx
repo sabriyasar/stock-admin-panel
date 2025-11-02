@@ -179,6 +179,8 @@ export default function UsersPage() {
           open={modalVisible}
           onOk={handleOk}
           onCancel={() => setModalVisible(false)}
+          okText={editingUser ? 'Güncelle' : 'Ekle'}
+          cancelText="İptal"
           centered
         >
           <Form form={form} layout="vertical">
