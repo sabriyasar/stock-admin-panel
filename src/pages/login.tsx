@@ -3,8 +3,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Form, Input, Button, message } from 'antd'
 import { LockOutlined, MailOutlined } from '@ant-design/icons'
-import api from '@/services/api'
-import { AxiosError } from 'axios'
+import axios, { AxiosError } from 'axios'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -13,7 +12,12 @@ export default function LoginPage() {
   const onFinish = async (values: { email: string; password: string }) => {
     setLoading(true)
     try {
-      const res = await api.post('api/admin/auth/login', values)
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/auth/login`,
+        values,
+        { headers: { 'Content-Type': 'application/json' } }
+      )      
+  
       const { token, user } = res.data
       localStorage.setItem('token', token)
       localStorage.setItem('user', JSON.stringify(user))
@@ -26,7 +30,7 @@ export default function LoginPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }  
 
   return (
     <div className="login-container">
