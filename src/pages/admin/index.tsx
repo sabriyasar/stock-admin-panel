@@ -35,7 +35,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     // Socket.io bağlantısı
-    const s: Socket = io(process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5050')
+    const s: Socket = io(process.env.NEXT_PUBLIC_API_URL)
 
     // Sunucudan online kullanıcı sayısını dinle
     s.on('online_users', (count: number) => {
