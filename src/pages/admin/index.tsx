@@ -63,24 +63,25 @@ export default function AdminPage() {
           </Card>
         </Col>
         <Col xs={24} sm={12} md={8}>
-          <Card bordered>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span
-                style={{
-                  display: 'inline-block',
-                  width: 12,
-                  height: 12,
-                  borderRadius: '50%',
-                  backgroundColor: stats.onlineUsers > 0 ? 'green' : 'gray'
-                }}
-              ></span>
-              <Statistic
-                title="Anlık Çevrimiçi Kullanıcı"
-                value={stats.onlineUsers}
-              />
-            </div>
-          </Card>
-        </Col>
+  <Card bordered>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'flex-start' }}>
+      <Statistic
+        title="Anlık Çevrimiçi Kullanıcı"
+        value={stats.onlineUsers}
+      />
+      <span
+        style={{
+          display: 'inline-block',
+          width: 12,
+          height: 12,
+          borderRadius: '50%',
+          backgroundColor: stats.onlineUsers > 0 ? 'green' : 'gray'
+        }}
+      ></span>
+    </div>
+  </Card>
+</Col>
+
       </Row>
     </Dashboard>
   )
