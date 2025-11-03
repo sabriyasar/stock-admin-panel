@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Card, Row, Col, Statistic, message } from 'antd'
+import { Card, Row, Col, Statistic, message, Badge } from 'antd'
 import Dashboard from '@/components/dashboard'
 import api from '@/services/api'
 import { io, Socket } from 'socket.io-client'
@@ -20,11 +20,14 @@ export default function AdminPage() {
   })
 
   useEffect(() => {
-    // İlk olarak istatistikleri getir
     const fetchStats = async () => {
       try {
         const res = await api.get('/api/admin/users/stats')
-        setStats(prev => ({ ...prev, totalUsers: res.data.totalUsers, todayUsers: res.data.todayUsers }))
+        setStats(prev => ({
+          ...prev,
+          totalUsers: res.data.totalUsers,
+          todayUsers: res.data.todayUsers
+        }))
       } catch (err) {
         console.error('İstatistikler alınamadı:', err)
         message.error('İstatistikler alınamadı')
@@ -34,10 +37,8 @@ export default function AdminPage() {
   }, [])
 
   useEffect(() => {
-    // Socket.io bağlantısı
-    const s: Socket = io(process.env.NEXT_PUBLIC_API_URL)
+    const s: Socket = io(process.env.NEXT_PUBLIC_API_URL || '')
 
-    // Sunucudan online kullanıcı sayısını dinle
     s.on('online_users', (count: number) => {
       setStats(prev => ({ ...prev, onlineUsers: count }))
     })
@@ -45,7 +46,7 @@ export default function AdminPage() {
     return () => {
       s.disconnect()
     }
-  }, []) // [] ile sadece mount/unmount sırasında çalışacak
+  }, [])
 
   return (
     <Dashboard>
@@ -63,7 +64,21 @@ export default function AdminPage() {
         </Col>
         <Col xs={24} sm={12} md={8}>
           <Card bordered>
-            <Statistic title="Anlık Çevrimiçi Kullanıcı" value={stats.onlineUsers} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span
+                style={{
+                  display: 'inline-block',
+                  width: 12,
+                  height: 12,
+                  borderRadius: '50%',
+                  backgroundColor: stats.onlineUsers > 0 ? 'green' : 'gray'
+                }}
+              ></span>
+              <Statistic
+                title="Anlık Çevrimiçi Kullanıcı"
+                value={stats.onlineUsers}
+              />
+            </div>
           </Card>
         </Col>
       </Row>
